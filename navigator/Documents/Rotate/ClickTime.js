@@ -24,6 +24,7 @@ class ClickTime extends Component {
         strokeWidth: PropTypes.number.isRequired,
         strokeColor: PropTypes.string.isRequired,
         progressColor: PropTypes.string.isRequired,
+        onProgressNumChange:PropTypes.func.isRequired,
     };
 
     begin={bgeinX:0,beginY:0};
@@ -80,13 +81,7 @@ class ClickTime extends Component {
         const path2 = new Path()
             .push(`M100,50 A50,50 0 ${sel},1 ${endX},${endY}`);
 
-        var linearGradient = new LinearGradient({
-                '.1': 'blue', // blue in 1% position
-                '1': 'rgba(255, 255, 255, 0)' // opacity white in 100% position
-            },
-            "0", "0", "0", "400"
-        );
-        var tra = new Transform().move(20, 20)
+
         return (
             <View style={{width:this.props.edgeLength,
                 height:this.props.edgeLength,
@@ -115,7 +110,7 @@ class ClickTime extends Component {
     }
 
     calculationCrossPoint() {
-        console.log('重新计算')
+        console.log('重新计算');
         const X = this.state.touchPoint.x;
         const Y = this.state.touchPoint.y;
 
@@ -124,6 +119,10 @@ class ClickTime extends Component {
 
         const tanB = (Y - centerY) / (X - centerX);
         const HD = Math.atan(tanB); // 得弧度
+
+        const MHD = HD + (0.5 + (X>=centerX?0:1))*Math.PI;
+        const progress = (MHD / (Math.PI * 2)) * 100;
+        this.props.onProgressNumChange(Math.floor(progress));
 
         const sinB = Math.sin(HD);
         const cosB = Math.cos(HD);
