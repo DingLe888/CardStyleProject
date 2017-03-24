@@ -14,6 +14,7 @@ import {
 import Task from './Task'
 import SnapCarousel from './SnapCarousel'
 import Example from './Example'
+import RotateView from '../Rotate/RotateView'
 
 class Look extends Component{
 
@@ -34,6 +35,11 @@ class Look extends Component{
                     <Text style={styles.textStyle}
                           onPress={this.jumpToExample.bind(this)}>
                         点我看卡片堆叠
+                    </Text>
+
+                    <Text style={styles.textStyle}
+                          onPress={this.jumpToExample2.bind(this)}>
+                        点我看卡转动圆圈
                     </Text>
                 </View>
             )
@@ -59,6 +65,14 @@ class Look extends Component{
     jumpToExample(){
         this.props.navigator.push({
             component: Example, // 要跳转的版块
+            // passProps: {'url': 'www.baidu.com'},
+            // sceneConfig:Navigator.SceneConfigs.FloatFromBottom
+        })
+    }
+
+    jumpToExample2(){
+        this.props.navigator.push({
+            component: RotateView, // 要跳转的版块
             // passProps: {'url': 'www.baidu.com'},
             // sceneConfig:Navigator.SceneConfigs.FloatFromBottom
         })
